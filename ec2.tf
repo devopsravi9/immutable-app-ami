@@ -9,6 +9,9 @@ resource "aws_instance" "instance" {
 }
 
 resource "null_resource" "copy-local-artifact" {
+  triggers = {
+    abc    = timestamp()
+  }
   provisioner "file" {
     connection {
       user     = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["SSH_USER"]
