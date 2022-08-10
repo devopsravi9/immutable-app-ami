@@ -18,7 +18,7 @@ resource "null_resource" "copy-local-artifact" {
 
     provisioner "file" {
       source      = "${var.COMPONENT}-${var.APP_VERSION}.zip"
-      destination = "/tmp/{{ COMPONENT }}.zip"
+      destination = "/tmp/${var.COMPONENT}.zip"
     }
 
   }
