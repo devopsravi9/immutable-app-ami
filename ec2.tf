@@ -14,15 +14,12 @@ resource "null_resource" "copy-local-artifact" {
       user     = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["SSH_USER"]
       password = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["SSH_PASS"]
       host     = aws_instance.instance.private_ip
+      }
+    source      = "${var.COMPONENT}-${var.APP_VERSION}.zip"
+    destination = "/tmp/${var.COMPONENT}.zip"
     }
-
-    provisioner "file" {
-      source      = "${var.COMPONENT}-${var.APP_VERSION}.zip"
-      destination = "/tmp/${var.COMPONENT}.zip"
-    }
-
   }
-}
+
 
 resource "null_resource" "ansible" {
   depends_on = [null_resource.copy-local-artifact]
